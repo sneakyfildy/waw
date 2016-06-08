@@ -32,6 +32,26 @@ define([], function(){
             }
         ];
         
+        /**
+         * 
+         * @param {String[]} pathArr
+         * @returns {Boolean}
+         */
+        s.checkFn = function(pathArr){
+            var movedX, movedY;
+            
+            if (pathArr.length !== s.timeLimit){
+                return false;
+            }
+            movedX = movedY = 0;
+            pathArr.forEach(function(move){
+                movedX += move === 'w' ? 1 : move === 'e' ? -1 : 0;
+                movedY += move === 's' ? 1 : move === 'n' ? -1 : 0;
+            });
+            
+            return movedX === 0 && movedY === 0;
+        };
+        
         s.startCheck = function(){
             s.paths.forEach(function(pDef){
                 pDef.isChecked = true;
@@ -69,6 +89,7 @@ define([], function(){
                 s.findInProgress = false;
             }
         };
+        
         s.findNext = function(){
             var calculatedResult, item;
             item = s.generateTestItem();                
@@ -80,26 +101,6 @@ define([], function(){
             }
             s.lastChecked = item;
             s.continueFind();
-        };
-        
-        /**
-         * 
-         * @param {String[]} pathArr
-         * @returns {Boolean}
-         */
-        s.checkFn = function(pathArr){
-            var movedX, movedY;
-            
-            if (pathArr.length !== s.timeLimit){
-                return false;
-            }
-            movedX = movedY = 0;
-            pathArr.forEach(function(move){
-                movedX += move === 'w' ? 1 : move === 'e' ? -1 : 0;
-                movedY += move === 's' ? 1 : move === 'n' ? -1 : 0;
-            });
-            
-            return movedX === 0 && movedY === 0;
         };
         
         s.generateTestItem = function(){
