@@ -1,8 +1,9 @@
 define([], function(){
     function controller ($scope, $timeout) {
         var s = $scope;
-        s.findDelay = 1000;
+        s.findDelay = 100;
         s.timeLimit = 10;
+        s.findLimit = 10;
         s.generated = [];
         s.paths = [
             {
@@ -52,7 +53,7 @@ define([], function(){
                 s.findInProgress = false;
                 s.neededValid = 0;
             }else{
-                s.neededValid = 10;
+                s.neededValid = s.findLimit || 10;
                 s.findInProgress = true;
                 s.findNext();                
             }            
