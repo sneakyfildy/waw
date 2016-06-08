@@ -4,8 +4,80 @@
         <title>Worth a Walk</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel='stylesheet' type='text/css' href='css/main.css'>
+        <link rel="stylesheet" href="bs_bloknotus/css/bootstrap.min.css">
+        <link rel="stylesheet" href="bs_bloknotus/css/bootstrap-theme.min.css">        
     </head>
     <body>
-        <div></div>
+        <div ng-controller="wawController" ng-cloak class="app">
+            <div class="test">
+                <p>Paths:</p>
+                <div ng-repeat="p in paths">
+                    <div class="test-item">
+                        <div class="left">
+                            <div class="path-moves-list">
+                                <span ng-repeat="move in p.path track by $index">
+                                    {{move}}
+                                </span>
+                            </div>
+                            <p>
+                                Expected result: <b>{{p.expectedResult ? "true" : "false"}}</b>
+                            </p>
+                        </div>
+                        <div class="right" ng-class="{
+                                checked: p.isChecked,
+                                good: p.isChecked && (p.expectedResult === p.calculatedResult),
+                                bad: p.isChecked && (p.expectedResult !== p.calculatedResult)
+                            }">
+                            <div class="test-result">{{p.calculatedResult ? "true" : "false"}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="test">
+                <p>Generated Paths:</p>
+                <div ng-repeat="p in generated">
+                    <div class="test-item">
+                        <div class="left">
+                            <div class="path-moves-list">
+                                <span ng-repeat="move in p.path track by $index">
+                                    {{move}}
+                                </span>
+                            </div>
+                            <p>
+                                Expected result: no idea
+                            </p>
+                        </div>
+                        <div class="right checked">
+                            <div class="test-result">{{p.calculatedResult ? "true" : "false"}}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="wrap">
+               <div class="buttons-block">
+                   <button ng-click="startCheck()" class="btn btn-default">Check</button>                   
+                   <button ng-click="reset()" class="btn btn-default">Reset</button>
+                   
+                   <button ng-click="startFind()" ng-class="{'btn-success': !findInProgress, 'btn-primary': findInProgress}" class="btn btn-default">
+                       {{findInProgress ? "Stop" : "Find 100 Valid"}}
+                   </button>
+                   <span>Find speed (delay):</span>
+                   <input type="number" min="10" ng-model="findDelay" ng-maxlength="5">
+                   <span>ms</span>
+               </div>
+               <div class="last-checked" ng-show="!!lastChecked">
+                   <p>
+                       Last checked random:
+                   [{{lastChecked.path.join(',')}}]
+                   </p>
+               </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="js/angular.min.js"></script>
+        <script async type="text/javascript" src="js/jquery.js"></script>
+        <script async type="text/javascript" src="bs_bloknotus/js/bootstrap.min.js"></script> 
+        <script data-main="js/modules/waw" async type="text/javascript" src="js/require.js"></script>
     </body>
 </html>

@@ -1,0 +1,88 @@
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak, .ng-hide:not(.ng-hide-animate) {
+    display: none !important;
+}
+@font-face {
+    font-family: 'll';
+    src: url('fonts/lato-light-webfont.woff2') format('woff2'),
+         url('fonts/lato-light-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'lr';
+    src: url('fonts/lato-regular-webfont.woff2') format('woff2'),
+         url('fonts/lato-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.app{
+    padding: 20px 40px;
+    border: 1px dashed #aaa;
+    font-size: 16px;
+    font-family: 'lr';
+}
+.test{
+    display: inline-block;
+    min-height: 480px;
+    max-height: 480px;
+    width: 425px;
+    overflow-y: auto;
+    vertical-align: middle;
+}
+.path-moves-list{
+    font-weight: bold;
+}
+.bad{
+    color: #E31414;
+}
+.good{
+    color: #2BA61E;
+}
+.left, .right{
+    display: block;
+}
+.left{
+    padding-right: 50px;
+}
+.right{
+    width: 70px;
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    height: 100%;
+    border-left: 1px dashed #ddd;
+}
+.right .test-result{
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    height: 1em;
+    margin-top: -0.5em;
+    line-height: 1em;
+    text-align: center;
+    font-size: 1.5em;
+    font-family: 'll';
+    display: none;
+}
+.right.checked .test-result{
+    display: block;
+}
+.test-item{
+    background-color: #FBFFEB;
+    width: 400px;
+    position: relative;
+    padding: 5px;
+    border: 1px dashed #ddd;
+    margin-bottom: 5px;
+}
+
+.last-checked, .buttons-block{
+    display: inline-block;
+}
+.last-checked{
+    margin-left: 30px;
+}
+input{
+    width: 70px;
+}
