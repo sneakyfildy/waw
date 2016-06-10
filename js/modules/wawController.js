@@ -92,14 +92,18 @@ define([], function(){
         };
 
         s.findNext = function(){
-            var calculatedResult, item;
+            var calculatedResult, item, cacheKey;
             s.foundCache = s.foundCache || {};
             item = s.generateTestItem();
+            cacheKey = item.path.join('');
+            if (s.foundCache[cacheKey]){
+                return s.continueFind();
+            }
+            s.foundCache[cacheKey] = 1;
             calculatedResult = s.checkFn(item.path);
-            if (calculatedResult && !s.foundCache[item.path.join('')]){
+            if (calculatedResult){
                 item.calculatedResult = calculatedResult;
                 s.generated.push(item);
-                s.foundCache[item.path.join('')] = 1;
                 s.neededValid--;
             }
             s.lastChecked = item;
