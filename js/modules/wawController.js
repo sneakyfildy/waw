@@ -31,15 +31,15 @@ define([], function(){
                 expectedResult: true
             }
         ];
-        
+
         /**
-         * 
+         *
          * @param {String[]} pathArr
          * @returns {Boolean}
          */
         s.checkFn = function(pathArr){
             var movedX, movedY;
-            
+
             if (pathArr.length !== s.timeLimit){
                 return false;
             }
@@ -48,17 +48,17 @@ define([], function(){
                 movedX += move === 'w' ? 1 : move === 'e' ? -1 : 0;
                 movedY += move === 's' ? 1 : move === 'n' ? -1 : 0;
             });
-            
+
             return movedX === 0 && movedY === 0;
         };
-        
+
         s.startCheck = function(){
             s.paths.forEach(function(pDef){
                 pDef.isChecked = true;
                 pDef.calculatedResult = s.checkFn(pDef.path);
             });
         };
-        
+
         s.reset = function(){
             s.paths.forEach(function(pDef){
                 delete pDef.isChecked;
@@ -67,18 +67,19 @@ define([], function(){
             s.generated = [];
             s.lastChecked = null;
         };
-        
+
         s.startFind = function(){
+            s.foundCache = {};
             if (s.findInProgress){
                 s.findInProgress = false;
                 s.neededValid = 0;
             }else{
                 s.neededValid = s.findLimit || 10;
                 s.findInProgress = true;
-                s.findNext();                
-            }            
+                s.findNext();
+            }
         };
-        
+
         s.continueFind = function(){
             if (s.neededValid > 0 && !!s.findInProgress){
                 $timeout(function(){
@@ -89,40 +90,42 @@ define([], function(){
                 s.findInProgress = false;
             }
         };
-        
+
         s.findNext = function(){
             var calculatedResult, item;
-            item = s.generateTestItem();                
+            s.foundCache = s.foundCache || {};
+            item = s.generateTestItem();
             calculatedResult = s.checkFn(item.path);
-            if (calculatedResult){
+            if (calculatedResult && !s.foundCache[item.path.join('')]){
                 item.calculatedResult = calculatedResult;
                 s.generated.push(item);
+                s.foundCache[item.path.join('')] = 1;
                 s.neededValid--;
             }
             s.lastChecked = item;
             s.continueFind();
         };
-        
+
         s.generateTestItem = function(){
             var w, count, moves;
             w = ['n', 's', 'e', 'w'];
             count = 10;
             moves = [];
-            
+
             while (count > 0){
                 moves.push( w[rand(0,3)] );
-                count--;           
+                count--;
             }
-            
+
             return {
                 path: moves
             };
         };
-        
+
         function rand(min, max){
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
     }
-    
+
     return controller;
 });
